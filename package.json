@@ -1,0 +1,14 @@
+{
+  "name": "freelancehub",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "scripts": {
+    "dev": "cd apps/web && pnpm dev",
+    "build": "turbo run build",
+    "start": "turbo run start"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}
