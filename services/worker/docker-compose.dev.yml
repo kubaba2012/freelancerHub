@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:password@localhost:5432/freelancehub
+    command: pnpm dev

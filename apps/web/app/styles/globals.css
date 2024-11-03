@@ -1,3 +1,87 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #3B82F6;
+  --secondary-color: #1E40AF;
+  --text-color: #1F2937;
+  --background-color: #F9FAFB;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans;
+  }
+}
+
+@layer components {
+  .hero {
+    @apply relative min-h-[600px] flex flex-col items-center justify-center text-center px-4;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  }
+
+  .hero::before {
+    content: '';
+    @apply absolute inset-0 bg-black opacity-30;
+  }
+
+  .hero > * {
+    @apply relative z-10;
+  }
+
+  .search-form {
+    @apply w-full max-w-2xl mx-auto mt-8;
+  }
+
+  .search-form input {
+    @apply w-full px-6 py-3 rounded-l-md border-0 focus:ring-2 focus:ring-blue-500;
+  }
+
+  .search-form button {
+    @apply px-8 py-3 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition-colors;
+  }
+
+  .talent-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:transform hover:scale-105;
+  }
+
+  .certification {
+    @apply inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium;
+  }
+
+  .category-grid {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4;
+  }
+
+  .category-item {
+    @apply flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow;
+  }
+}
+
+/* 动画效果 */
+.blur-effect {
+  animation: blurIn 0.5s ease-out forwards;
+}
+
+@keyframes blurIn {
+  from {
+    backdrop-filter: blur(0);
+  }
+  to {
+    backdrop-filter: blur(5px);
+  }
+}
+
+/* 导航栏滚动效果 */
+header {
+  @apply transition-all duration-300;
+}
+
+header.shrink {
+  @apply bg-white/95 backdrop-blur-sm shadow-md;
+}
+
+.header-shrink {
+  @apply pt-16;
+}

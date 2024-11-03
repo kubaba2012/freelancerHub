@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ../../
+      dockerfile: docker/dev/web.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../apps/web:/app/apps/web
+      - ../../packages:/app/packages
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:4000
+
+  api:
+    build:
+      context: ../../
+      dockerfile: docker/dev/api.Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ../../services/api:/app/services/api
+      - ../../packages:/app/packages
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/freelancehub
+      - NODE_ENV=development
+
+  worker:
+    build:
+      context: ../../
+      dockerfile: docker/dev/worker.Dockerfile
+    volumes:
+      - ../../services/worker:/app/services/worker
+      - ../../packages:/app/packages
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/freelancehub
+      - NODE_ENV=development
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=freelancehub
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
