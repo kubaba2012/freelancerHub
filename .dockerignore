@@ -1,25 +1,42 @@
 # dependencies
 node_modules
 .pnpm-store
-.pnp
-.pnp.js
+.npm
+.yarn
 
-# next.js
-.next/
-out/
+# development files
+.git
+.gitignore
+.env
+.env.*
+*.log
+README.md
+CHANGELOG.md
+docs
 
-# misc
-.DS_Store
-*.pem
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
 
-# debug
+# testing
+coverage
+__tests__
+**/*.test.*
+**/*.spec.*
+
+# build outputs
+.next
+dist
+build
+out
+
+# debug files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 
-# local env files
-.env*.local
-
-# docker
-docker/**/data
+# system files
+.DS_Store
+Thumbs.db

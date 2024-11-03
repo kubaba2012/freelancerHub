@@ -1,17 +1,37 @@
-version: '3'
+version: '3.8'
+
 services:
   web:
-    build:
-      context: ../..
-      dockerfile: docker/dev/Dockerfile
-    ports:
-      - "3000:3000"
+    extends:
+      file: ../../apps/web/docker-compose.dev.yml
+      service: web
+    depends_on:
+      - api
+
+  api:
+    extends:
+      file: ../../services/api/docker-compose.dev.yml
+      service: api
+    depends_on:
+      - postgres
+
+  worker:
+    extends:
+      file: ../../services/worker/docker-compose.dev.yml
+      service: worker
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
     environment:
-      - NODE_ENV=development
-      - NEXT_TELEMETRY_DISABLED=1
-      - WATCHPACK_POLLING=true
-    command: sh -c "cd apps/web && pnpm dev"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
     volumes:
-      - ../../apps/web:/app/apps/web
-      - /app/apps/web/node_modules
-      - /app/apps/web/.next
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: 
