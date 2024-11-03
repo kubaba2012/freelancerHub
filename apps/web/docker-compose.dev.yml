@@ -1,12 +1,15 @@
 services:
   web:
     image: 65862070/freelancehub-web:v1.0.1
+    container_name: web
     volumes:
       - .:/app
       - /app/node_modules
-      - /app/.next
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - WATCHPACK_POLLING=true
+    command: >
+      sh -c "pnpm add -D tailwindcss postcss autoprefixer &&
+             npx tailwindcss init -p &&
+             pnpm dev"
